@@ -15,31 +15,31 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author Charly Cimino
- * Aprendé más Java en mi canal: https://www.youtube.com/c/CharlyCimino
- * Encontrá más código en mi repo de GitHub: https://github.com/CharlyCimino
+ * @author Charly Cimino Aprendé más Java en mi canal:
+ * https://www.youtube.com/c/CharlyCimino Encontrá más código en mi repo de
+ * GitHub: https://github.com/CharlyCimino
  */
 public class JFrameVistaPrincipal extends JFrameTemplate {
-    
+
     public JFrameVistaPrincipal(String titulo, Component parent) {
-        super(titulo,parent);
-        initComponents();      
+        super(titulo, parent);
+        initComponents();
         cargarIconos();
         ocultarColumnaID();
         actualizarEstado(false);
     }
-    
+
     public JFrameVistaPrincipal(String titulo) {
-        this(titulo,null);
+        this(titulo, null);
     }
-    
+
     private void cargarIconos() {
         cargarIcono(jLabelCategoria, "tag-icon.png");
         cargarIcono(jButtonConectar, "broken-link.png");
         cargarIcono(jButtonVaciar, "trash-icon.png");
         cargarIcono(jButtonAgregar, "add-user-icon.png");
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -176,95 +176,92 @@ public class JFrameVistaPrincipal extends JFrameTemplate {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-        
+
     public boolean confirmar(String mensaje) {
         int res = JOptionPane.showConfirmDialog(null, mensaje, "Confirmar...", JOptionPane.YES_NO_OPTION);
         return res == 0;
     }
-        
+
     public void listarContactos(List<Contacto> contactos) {
         limpiarFilas();
         for (Contacto c : contactos) {
             agregarFila(c.getId(), c.getNombre(), c.getApellido(), c.getMail());
         }
     }
-    
-    private void agregarFila (int id, String nombre, String apellido, String mail) {
+
+    private void agregarFila(int id, String nombre, String apellido, String mail) {
         DefaultTableModel dtf = (DefaultTableModel) this.jTable1.getModel();
-        dtf.addRow(new Object[] {id,nombre,apellido,mail});
+        dtf.addRow(new Object[]{id, nombre, apellido, mail});
     }
-    
+
     private void limpiarFilas() {
         DefaultTableModel dtf = (DefaultTableModel) this.jTable1.getModel();
-        int cant = dtf.getRowCount();
-        for(int i=cant; i>0; i--){
-            dtf.removeRow(i-1);
+        while (dtf.getRowCount() > 0) {
+            dtf.removeRow(0);
         }
     }
-    
-    private void cargarListaDeFiltros () {
-        this.jComboBoxFiltroCategoria.setModel( new DefaultComboBoxModel(Categoria.values()));
+
+    private void cargarListaDeFiltros() {
+        this.jComboBoxFiltroCategoria.setModel(new DefaultComboBoxModel(Categoria.values()));
     }
-    
-    private void ocultarColumnaID () {
+
+    private void ocultarColumnaID() {
         this.jTable1.getTableHeader().getColumnModel().getColumn(0).setMaxWidth(0);
         this.jTable1.getTableHeader().getColumnModel().getColumn(0).setMinWidth(0);
         this.jTable1.getColumnModel().getColumn(0).setMaxWidth(0);
         this.jTable1.getColumnModel().getColumn(0).setMinWidth(0);
     }
-    
+
     public int obtenerIDSeleccionado() {
         int nroFila = this.jTable1.getSelectedRow();
         return (int) this.jTable1.getValueAt(nroFila, 0);
     }
-    
-    public final void actualizarEstado (boolean estaConectado) {
+
+    public final void actualizarEstado(boolean estaConectado) {
         this.jLabelLeyenda.setVisible(estaConectado);
         activarControles(estaConectado);
         this.jButtonConectar.setEnabled(!estaConectado);
         if (estaConectado) {
             cargarListaDeFiltros();
             this.jLabelEstado.setText("CONECTADO");
-            this.jLabelEstado.setForeground(new Color(55,184,88));
-        }
-        else {
+            this.jLabelEstado.setForeground(new Color(55, 184, 88));
+        } else {
             this.jLabelEstado.setText("NO CONECTADO");
-            this.jLabelEstado.setForeground(new Color(255,87,71));
+            this.jLabelEstado.setForeground(new Color(255, 87, 71));
         }
     }
-    
-    private void activarControles (boolean flag) {
+
+    private void activarControles(boolean flag) {
         for (int i = 1; i < this.jPanelBotonera.getComponents().length; i++) {
             this.jPanelBotonera.getComponent(i).setEnabled(flag);
         }
         this.jComboBoxFiltroCategoria.setEnabled(flag);
     }
-    
+
     public Categoria obtenerCategoriaSeleccionada() {
         return (Categoria) this.jComboBoxFiltroCategoria.getSelectedItem();
     }
-    
+
     ////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////// MANEJADORES PARA CADA ACCION //////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////    
-    
-    public void manejarAccionConectar (ActionListener al) {
+    public void manejarAccionConectar(ActionListener al) {
         this.jButtonConectar.addActionListener(al);
     }
-    
-    public void manejarAccionAgregar (ActionListener al) {
+
+    public void manejarAccionAgregar(ActionListener al) {
         this.jButtonAgregar.addActionListener(al);
     }
-    
-    public void manejarAccionVaciar (ActionListener al) {
+
+    public void manejarAccionVaciar(ActionListener al) {
         this.jButtonVaciar.addActionListener(al);
     }
-    
-    public void manejarCambioItemFiltrar (ItemListener il) {
+
+    public void manejarCambioItemFiltrar(ItemListener il) {
         this.jComboBoxFiltroCategoria.addItemListener(il);
     }
-    
-    public void manejarClickEnTabla (MouseListener ml) {
+
+    public void manejarClickEnTabla(MouseListener ml) {
         this.jTable1.addMouseListener(ml);
     }
 
