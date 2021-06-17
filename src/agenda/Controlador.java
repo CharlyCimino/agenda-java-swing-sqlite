@@ -8,7 +8,6 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.sql.SQLException;
 import agenda.vista.clases.JFrameVistaLogin;
 import agenda.vista.clases.JFrameVistaFormularioAgregar;
 import agenda.vista.clases.JFrameVistaFormularioVer;
@@ -63,8 +62,8 @@ public class Controlador {
             listarContactosEnVista();
             vFormAgregar.cerrarVentana();
             vPrincipal.mostrarCartelDeInfo("Se agregó a " + co.nombreCompleto() + " a la agenda.");
-        } catch (RuntimeException | SQLException e) {
-            vPrincipal.mostrarCartelDeError("Se ha producido un error al agregar el contacto\n\n" + e.getMessage());
+        } catch (Exception ex) {
+            tratarExcepcion(ex);
         }
     }
 
@@ -72,8 +71,8 @@ public class Controlador {
         try {
             Contacto co = vFormVer.getContacto();
             model.actualizarContacto(co);
-        } catch (RuntimeException | SQLException e) {
-            vPrincipal.mostrarCartelDeError("Se ha producido un error al actualizar el contacto\n\n" + e.getMessage());
+        } catch (Exception ex) {
+            tratarExcepcion(ex);
         }
     }
 
@@ -86,8 +85,8 @@ public class Controlador {
                 listarContactosEnVista();
                 vFormVer.cerrarVentana();
                 vPrincipal.mostrarCartelDeInfo("Se borró a " + co.nombreCompleto() + " de la agenda.");
-            } catch (SQLException ex) {
-                vPrincipal.mostrarCartelDeError("Se ha producido un error al borrar el contacto\n\n" + ex.getMessage());
+            } catch (Exception ex) {
+                tratarExcepcion(ex);
             }
         }
     }
@@ -99,8 +98,8 @@ public class Controlador {
                 model.vaciarAgenda();
                 listarContactosEnVista();
                 vPrincipal.mostrarCartelDeInfo("Agenda vacía.");
-            } catch (SQLException ex) {
-                vPrincipal.mostrarCartelDeError("Se ha producido un error al intentar vaciar la agenda\n\n" + ex.getMessage());
+            } catch (Exception ex) {
+                tratarExcepcion(ex);
             }
         }
     }

@@ -50,8 +50,7 @@ public class Modelo {
 
     public Contacto obtenerContacto(int id) {
         String query = "SELECT * FROM contactos WHERE id = " + id;
-        try ( Statement stmt = this.conexion.createStatement();
-              ResultSet rs = stmt.executeQuery(query);) {
+        try ( Statement stmt = this.conexion.createStatement();  ResultSet rs = stmt.executeQuery(query);) {
             rs.next();
             Contacto contacto = generarContacto(rs);
             return contacto;
@@ -62,9 +61,12 @@ public class Modelo {
 
     public void agregarContacto(Contacto co) throws SQLException {
         String query = "INSERT INTO contactos VALUES (null,?,?,?,?,?,?,?)";
-        PreparedStatement ps = this.conexion.prepareStatement(query);
-        cargarDatosDeContactoEnSentencia(co, ps);
-        ps.executeUpdate();
+        try ( PreparedStatement ps = this.conexion.prepareStatement(query);) {
+            cargarDatosDeContactoEnSentencia(co, ps);
+            ps.executeUpdate();
+        } catch (Exception ex) {
+            throw new RuntimeException("No se pudo agregar contacto\n" + co, ex);
+        }
     }
 
     public void actualizarContacto(Contacto co) throws SQLException {
