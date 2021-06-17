@@ -42,13 +42,17 @@ public class Controlador {
         this.vPrincipal.setVisible(true);
 
     }
+    
+    private void tratarExcepcion(Exception ex) {
+        vPrincipal.mostrarCartelDeError(ex.getMessage() + "\n" + ex.getCause().getMessage());
+    }
 
     private void listarContactosEnVista() {
         try {
             Collection<Contacto> contactos = model.obtenerContactos(vPrincipal.obtenerCategoriaSeleccionada());
             vPrincipal.listarContactos(contactos);
-        } catch (SQLException ex) {
-            vPrincipal.mostrarCartelDeError("No se pudieron listar los contactos\n" + ex.getMessage());
+        } catch (Exception ex) {
+            tratarExcepcion(ex);
         }
     }
 
@@ -187,10 +191,8 @@ public class Controlador {
                 vLogin.cerrarVentana();
                 vPrincipal.actualizarEstado(true);
                 listarContactosEnVista();
-            } catch (SQLException ex) {
-                vPrincipal.mostrarCartelDeError("Error al conectar con la base de datos\n\n" + ex.getMessage());
-            } catch (ClassNotFoundException ex) {
-                vPrincipal.mostrarCartelDeError("Error al conectar con la base de datos\n\nDriver no encontrado: " + ex.getMessage());
+            } catch (Exception ex) {
+                tratarExcepcion(ex);
             }
         }
     }
