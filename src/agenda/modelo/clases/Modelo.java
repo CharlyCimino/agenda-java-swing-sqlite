@@ -82,14 +82,21 @@ public class Modelo {
     }
 
     public void borrarContacto(int id) throws SQLException {
-        Statement s = conexion.createStatement();
-        s.executeUpdate("DELETE FROM contactos WHERE contactos.id = " + id);
+        try ( Statement s = conexion.createStatement();) {
+            s.executeUpdate("DELETE FROM contactos WHERE contactos.id = " + id);
+        } catch (Exception ex) {
+            throw new RuntimeException("No se pudo borrar contacto con id " + id, ex);
+        }
+
     }
 
     public void vaciarAgenda() throws SQLException {
-        Statement s = conexion.createStatement();
-        s.executeUpdate("DELETE FROM contactos");
-        s.executeUpdate("UPDATE SQLITE_SEQUENCE SET SEQ=0 WHERE NAME='contactos'"); // Reinicia el contador de IDs
+        try ( Statement s = conexion.createStatement();) {
+            s.executeUpdate("DELETE FROM contactos");
+            s.executeUpdate("UPDATE SQLITE_SEQUENCE SET SEQ=0 WHERE NAME='contactos'"); // Reinicia el contador de IDs
+        } catch (Exception ex) {
+            throw new RuntimeException("No se pudo vaciar la agenda", ex);
+        }
     }
 
     private void cargarDatosDeContactoEnSentencia(Contacto co, PreparedStatement ps) throws SQLException {
