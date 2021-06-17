@@ -77,7 +77,7 @@ public class Modelo {
             cargarDatosDeContactoEnSentencia(co, ps);
             ps.executeUpdate();
         } catch (Exception ex) {
-            throw new RuntimeException("No se pudo editar contacto\n" + co, ex);
+            throw new RuntimeException("No se pudo actualizar contacto\n" + co, ex);
         }
     }
 
