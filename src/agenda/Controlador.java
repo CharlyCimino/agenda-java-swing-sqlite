@@ -17,9 +17,9 @@ import java.util.Collection;
 
 /**
  *
- * @author Charly Cimino
- * Aprendé más Java en mi canal: https://www.youtube.com/c/CharlyCimino
- * Encontrá más código en mi repo de GitHub: https://github.com/CharlyCimino
+ * @author Charly Cimino Aprendé más Java en mi canal:
+ * https://www.youtube.com/c/CharlyCimino Encontrá más código en mi repo de
+ * GitHub: https://github.com/CharlyCimino
  */
 public class Controlador {
 
@@ -42,7 +42,7 @@ public class Controlador {
         this.vPrincipal.setVisible(true);
 
     }
-    
+
     private void tratarExcepcion(Exception ex) {
         vPrincipal.mostrarCartelDeError(ex.getMessage() + "\n" + ex.getCause().getMessage());
     }
@@ -158,8 +158,8 @@ public class Controlador {
                     vFormVer.manejarAccionEditar(new HandlerEditarContactoVC());
                     vFormVer.manejarAccionBorrar(new HandlerBorrarContactoVC());
                     vFormVer.setVisible(true);
-                } catch (SQLException ex) {
-                    vPrincipal.mostrarCartelDeError("El contacto no existe\n" + ex.getMessage());
+                } catch (Exception ex) {
+                    tratarExcepcion(ex);
                 }
             }
         }

@@ -8,8 +8,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -50,12 +48,16 @@ public class Modelo {
         }
     }
 
-    public Contacto obtenerContacto(int id) throws SQLException {
-        Statement stmt = this.conexion.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT * FROM contactos WHERE id = " + id);
-        rs.next();
-        Contacto contacto = generarContacto(rs);
-        return contacto;
+    public Contacto obtenerContacto(int id) {
+        String query = "SELECT * FROM contactos WHERE id = " + id;
+        try ( Statement stmt = this.conexion.createStatement();
+              ResultSet rs = stmt.executeQuery(query);) {
+            rs.next();
+            Contacto contacto = generarContacto(rs);
+            return contacto;
+        } catch (Exception ex) {
+            throw new RuntimeException("No se pudo obtener contacto con ID " + id, ex);
+        }
     }
 
     public void agregarContacto(Contacto co) throws SQLException {
