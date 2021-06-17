@@ -87,7 +87,6 @@ public class Modelo {
         } catch (Exception ex) {
             throw new RuntimeException("No se pudo borrar contacto con id " + id, ex);
         }
-
     }
 
     public void vaciarAgenda() throws SQLException {
