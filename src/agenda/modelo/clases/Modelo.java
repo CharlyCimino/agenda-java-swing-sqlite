@@ -73,9 +73,12 @@ public class Modelo {
         String campos = "nombre = ?, apellido = ?, mail = ?, telefono = ?";
         campos += ", direccion = ?, fecha_nacimiento = ?, categoria = ?";
         String query = "UPDATE contactos SET " + campos + " WHERE id = " + co.getId();
-        PreparedStatement ps = this.conexion.prepareStatement(query);
-        cargarDatosDeContactoEnSentencia(co, ps);
-        ps.executeUpdate();
+        try ( PreparedStatement ps = this.conexion.prepareStatement(query);) {
+            cargarDatosDeContactoEnSentencia(co, ps);
+            ps.executeUpdate();
+        } catch (Exception ex) {
+            throw new RuntimeException("No se pudo editar contacto\n" + co, ex);
+        }
     }
 
     public void borrarContacto(int id) throws SQLException {
