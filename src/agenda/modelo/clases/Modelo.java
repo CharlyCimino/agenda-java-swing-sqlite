@@ -7,7 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
 
 /**
  *
@@ -23,9 +23,9 @@ public class Modelo {
         this.conexion = ConexionBD.getConexion(driver, url, user, pass);
     }
         
-    public List<Contacto> obtenerContactos (Categoria cat) throws SQLException {
+    public Collection<Contacto> obtenerContactos (Categoria cat) throws SQLException {
         Statement stmt = this.conexion.createStatement();
-        List<Contacto> contactos = new ArrayList<>();
+        Collection<Contacto> contactos = new ArrayList<>();
         String condWhere;
         
         switch (cat) {

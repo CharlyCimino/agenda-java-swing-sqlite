@@ -8,7 +8,7 @@ import java.awt.Component;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemListener;
 import java.awt.event.MouseListener;
-import java.util.List;
+import java.util.Collection;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -182,7 +182,7 @@ public class JFrameVistaPrincipal extends JFrameTemplate {
         return res == 0;
     }
 
-    public void listarContactos(List<Contacto> contactos) {
+    public void listarContactos(Collection<Contacto> contactos) {
         limpiarFilas();
         for (Contacto c : contactos) {
             agregarFila(c.getId(), c.getNombre(), c.getApellido(), c.getMail());

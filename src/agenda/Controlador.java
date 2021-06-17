@@ -13,7 +13,7 @@ import agenda.vista.clases.JFrameVistaLogin;
 import agenda.vista.clases.JFrameVistaFormularioAgregar;
 import agenda.vista.clases.JFrameVistaFormularioVer;
 import agenda.vista.clases.JFrameVistaPrincipal;
-import java.util.List;
+import java.util.Collection;
 
 /**
  *
@@ -45,7 +45,7 @@ public class Controlador {
 
     private void listarContactosEnVista() {
         try {
-            List<Contacto> contactos = model.obtenerContactos(vPrincipal.obtenerCategoriaSeleccionada());
+            Collection<Contacto> contactos = model.obtenerContactos(vPrincipal.obtenerCategoriaSeleccionada());
             vPrincipal.listarContactos(contactos);
         } catch (SQLException ex) {
             vPrincipal.mostrarCartelDeError("No se pudieron listar los contactos\n" + ex.getMessage());
