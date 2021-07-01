@@ -43,7 +43,8 @@ public class Controlador {
     }
 
     private void tratarExcepcion(Exception ex) {
-        vPrincipal.mostrarCartelDeError(ex.getMessage() + "\n" + ex.getCause().getMessage());
+        String causeMessage = ex.getCause() == null ? "" : "\n" + ex.getCause().getMessage();
+        vPrincipal.mostrarCartelDeError(ex.getMessage() + "\n" + causeMessage);
     }
 
     private void listarContactosEnVista() {

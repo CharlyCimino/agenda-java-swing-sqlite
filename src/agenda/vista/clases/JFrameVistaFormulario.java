@@ -276,6 +276,9 @@ public abstract class JFrameVistaFormulario extends JFrameTemplate {
         if (!esNumeroEntero(this.jTextFieldTelefono.getText())) {
             throw new IllegalStateException("El valor del campo \"" + this.jTextFieldTelefono.getName() + "\" no representa un número de teléfono");
         }
+        if (!mailValido(this.jTextFieldMail.getText())) {
+            throw new IllegalStateException("El valor del campo \"" + this.jTextFieldMail.getName() + "\" no representa un mail");
+        }
         if (this.jXDatePickerNacimiento.getDate() == null) {
             throw new IllegalStateException("El campo \"" + this.jXDatePickerNacimiento.getName() + "\" está vacío");
         }
@@ -292,6 +295,10 @@ public abstract class JFrameVistaFormulario extends JFrameTemplate {
         }
         this.jXDatePickerNacimiento.setEditable(flag);
         this.jComboBoxCategoria.setEnabled(flag);
+    }
+    
+    private boolean mailValido(String cad) {
+        return cad.contains("@") && cad.contains("."); // Habría que validarlo con una Regex (Expresión regular)
     }
 
     private boolean esNumeroEntero(String cad) {
